@@ -1,0 +1,30 @@
+### Multi-stage Dockerfile for MudopDB_v1 (Debian)
+## Build stage
+FROM debian:bookworm-slim AS build
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    cmake \
+    ca-certificates \
+    wget \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /workspace
+COPY . /workspace
+
+RUN rm -rf build CMakeCache.txt CMakeFiles || true \
+ && mkdir -p build \
+ && cd build \
+ && cmake -DCMAKE_BUILD_TYPE=Release .. \
+ && cmake --build . -- -j$(nproc)
+
+### Runtime stage
+FROM debian:bookworm-slim AS runtime
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+COPY --from=build /workspace/build/src/mudopdb /app/mudopdb
+RUN chmod +x /app/mudopdb
+
+ENTRYPOINT ["/app/mudopdb"]
