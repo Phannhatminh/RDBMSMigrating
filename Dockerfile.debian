@@ -17,8 +17,13 @@ COPY . /workspace
 RUN rm -rf build CMakeCache.txt CMakeFiles || true \
  && mkdir -p build \
  && cd build \
- && cmake -DCMAKE_BUILD_TYPE=Release .. \
+ && cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=ON .. \
  && cmake --build . -- -j$(nproc)
+
+# Tests stage: run unit tests (container exits non-zero on failure)
+FROM build AS tests
+WORKDIR /workspace/build
+ENTRYPOINT ["ctest","--output-on-failure"]
 
 ### Runtime stage
 FROM debian:bookworm-slim AS runtime
