@@ -45,7 +45,7 @@ int run_app(const AppConfig& cfg, std::istream& in, std::ostream& out) {
     if (s == "exit" || s == "quit") {
       break;
     }
-    if (s.find("select") != 0) {
+    if (s.rfind("select", 0) == 0) {
       do_query(stmt.get(), s);
     } else {
       do_update(stmt.get(), s);

@@ -14,10 +14,12 @@ public:
 };
 
 class EmbeddedDriver : public Driver {
-  std::unique_ptr<Connection> connect(const std::string& c);
+public:
+  std::unique_ptr<Connection> connect(const std::string& c) override;
 };
 class NetworkDriver : public Driver {
-  std::unique_ptr<Connection> connect(const std::string& c);
+public:
+  std::unique_ptr<Connection> connect(const std::string& c) override;
 };
 
 #endif // DRIVER_HPP
