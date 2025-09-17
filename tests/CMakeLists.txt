@@ -8,7 +8,7 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
-add_executable(tests test_utils.cpp)
+add_executable(tests test_utils.cpp test_app.cpp)
 target_link_libraries(tests PRIVATE gtest_main mudop_utils)
 target_include_directories(tests PRIVATE ${CMAKE_SOURCE_DIR}/include)
 include(GoogleTest)

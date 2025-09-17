@@ -62,8 +62,16 @@ docker build -t mudopdb:runtime -f Dockerfile.debian .
 # Run the app interactively
 docker run --rm -it mudopdb:runtime
 
-# Non-interactive example: pipe a connection string
+# Non-interactive: provide connection string via stdin and then commands
 echo "connection-string" | docker run --rm -i mudopdb:runtime
+
+# Or pass the connection string as an argument (main supports argv[1])
+# and feed commands via stdin (quit to exit)
+printf "quit\n" | docker run --rm -i mudopdb:runtime mem://test
+# Here-doc variant
+docker run --rm -i mudopdb:runtime mem://test << 'EOF'
+quit
+EOF
 ```
 
 What happens:
@@ -78,6 +86,9 @@ docker build --target tests -t mudopdb:tests -f Dockerfile.debian .
 
 # Execute tests (ctest --output-on-failure runs inside the container)
 docker run --rm mudopdb:tests
+
+# Run a single test (args are appended to ctest entrypoint)
+docker run --rm mudopdb:tests -R App.QuitImmediately -V
 ```
 
 Notes:
