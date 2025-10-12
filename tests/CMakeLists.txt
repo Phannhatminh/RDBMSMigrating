@@ -18,6 +18,10 @@ add_executable(tests
   test_scan.cpp
   test_connection.cpp
   test_resultset.cpp
+  test_file_layer.cpp
+  test_log_layer.cpp
+  test_buffer.cpp
+  test_buffermgr.cpp
 )
 target_link_libraries(tests PRIVATE gtest_main mudop_utils)
 target_include_directories(tests PRIVATE ${CMAKE_SOURCE_DIR}/include)
