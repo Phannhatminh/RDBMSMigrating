@@ -14,6 +14,10 @@ add_executable(tests
   test_query_update.cpp
   test_drivers.cpp
   test_app_flow.cpp
+  test_constant.cpp
+  test_scan.cpp
+  test_connection.cpp
+  test_resultset.cpp
 )
 target_link_libraries(tests PRIVATE gtest_main mudop_utils)
 target_include_directories(tests PRIVATE ${CMAKE_SOURCE_DIR}/include)
