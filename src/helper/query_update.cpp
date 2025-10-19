@@ -28,13 +28,13 @@ void do_query(Statement *stmt, const std::string &cmd) {
         size_t width = md->get_column_display_size(i);
 
         switch (md->get_column_type(i)) {
-          case record::Type::Integer: {
+          case record::Type::INTEGER: {
             // TODO: render integer value with width
             size_t ival = rs->get_int(fldname);
             std::cout << std::setw(width) << ival;
             break;
           }
-          case record::Type::Varchar: {
+          case record::Type::VARCHAR: {
             // TODO: render varchar value with width
             std::string sval = rs->get_string(fldname);
             std::cout << std::setw(width) << sval;

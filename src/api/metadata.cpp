@@ -8,16 +8,16 @@ EmbeddedMetadata::EmbeddedMetadata(std::shared_ptr<record::Schema> schema)
 EmbeddedMetadata::~EmbeddedMetadata() = default;
 
 size_t EmbeddedMetadata::get_column_count() const {
-	return sch_ ? sch_->fields.size() : 0;
+	return sch_ ? sch_->fields().size() : 0;
 }
 
 std::string EmbeddedMetadata::get_column_name(size_t column) const {
-	if (!sch_ || column == 0 || column > sch_->fields.size()) return {};
-	return sch_->fields[column - 1];
+	if (!sch_ || column == 0 || column > sch_->fields().size()) return {};
+	return sch_->fields()[column - 1];
 }
 
 record::Type EmbeddedMetadata::get_column_type(size_t /*column*/) const {
-	return record::Type::Integer;
+	return record::Type::INTEGER;
 }
 
 size_t EmbeddedMetadata::get_column_display_size(size_t /*column*/) const {
@@ -33,6 +33,6 @@ size_t NetworkMetadata::get_column_count() const { return 0; }
 
 std::string NetworkMetadata::get_column_name(size_t /*column*/) const { return {}; }
 
-record::Type NetworkMetadata::get_column_type(size_t /*column*/) const { return record::Type::Varchar; }
+record::Type NetworkMetadata::get_column_type(size_t /*column*/) const { return record::Type::VARCHAR; }
 
 size_t NetworkMetadata::get_column_display_size(size_t /*column*/) const { return 10; }

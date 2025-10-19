@@ -5,7 +5,8 @@ namespace buffer {
 BufferMgr::BufferMgr(std::shared_ptr<file::FileMgr> fm,
                      std::shared_ptr<log::LogMgr> lm,
                      size_t numbuffs)
-    : num_available_(numbuffs),
+    : fm_(fm),
+      num_available_(numbuffs),
       max_time_(MAX_TIME) {
     bufferpool_.reserve(numbuffs);
     for (size_t i = 0; i < numbuffs; i++) {
@@ -60,6 +61,10 @@ Buffer& BufferMgr::buffer(size_t idx) {
 
 void BufferMgr::set_max_time(uint64_t max_time_ms) {
     max_time_ = max_time_ms;
+}
+
+std::shared_ptr<file::FileMgr> BufferMgr::file_mgr() const {
+    return fm_;
 }
 
 std::optional<size_t> BufferMgr::try_to_pin(const file::BlockId& blk) {

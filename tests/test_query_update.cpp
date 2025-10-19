@@ -40,7 +40,7 @@ public:
   }
 
   record::Type get_column_type(size_t column) const override {
-    return (column >= 1 && column <= columns_.size()) ? columns_[column - 1].type : record::Type::Integer;
+    return (column >= 1 && column <= columns_.size()) ? columns_[column - 1].type : record::Type::INTEGER;
   }
 
   size_t get_column_display_size(size_t column) const override {
@@ -162,8 +162,8 @@ TEST(DoQueryTest, ExecutesQueryWithCorrectCommand) {
 TEST(DoQueryTest, HandlesEmptyResultSet) {
   auto stmt = std::make_unique<MockStatement>();
   auto metadata = std::make_unique<MockMetadata>(std::vector<MockMetadata::ColumnDef>{
-    {"id", record::Type::Integer, 10},
-    {"name", record::Type::Varchar, 20}
+    {"id", record::Type::INTEGER, 10},
+    {"name", record::Type::VARCHAR, 20}
   });
   auto rs = std::make_unique<MockResultSet>(std::vector<MockResultSet::Row>{}, std::move(metadata));
 
@@ -177,7 +177,7 @@ TEST(DoQueryTest, HandlesEmptyResultSet) {
 TEST(DoQueryTest, DisplaysIntegerColumn) {
   auto stmt = std::make_unique<MockStatement>();
   auto metadata = std::make_unique<MockMetadata>(std::vector<MockMetadata::ColumnDef>{
-    {"id", record::Type::Integer, 10}
+    {"id", record::Type::INTEGER, 10}
   });
 
   MockResultSet::Row row1;
@@ -202,7 +202,7 @@ TEST(DoQueryTest, DisplaysIntegerColumn) {
 TEST(DoQueryTest, DisplaysVarcharColumn) {
   auto stmt = std::make_unique<MockStatement>();
   auto metadata = std::make_unique<MockMetadata>(std::vector<MockMetadata::ColumnDef>{
-    {"name", record::Type::Varchar, 20}
+    {"name", record::Type::VARCHAR, 20}
   });
 
   MockResultSet::Row row1;
@@ -227,9 +227,9 @@ TEST(DoQueryTest, DisplaysVarcharColumn) {
 TEST(DoQueryTest, DisplaysMultipleColumns) {
   auto stmt = std::make_unique<MockStatement>();
   auto metadata = std::make_unique<MockMetadata>(std::vector<MockMetadata::ColumnDef>{
-    {"id", record::Type::Integer, 10},
-    {"name", record::Type::Varchar, 20},
-    {"age", record::Type::Integer, 5}
+    {"id", record::Type::INTEGER, 10},
+    {"name", record::Type::VARCHAR, 20},
+    {"age", record::Type::INTEGER, 5}
   });
 
   MockResultSet::Row row1;
@@ -262,7 +262,7 @@ TEST(DoQueryTest, DisplaysMultipleColumns) {
 TEST(DoQueryTest, ClosesResultSetAfterCompletion) {
   auto stmt = std::make_unique<MockStatement>();
   auto metadata = std::make_unique<MockMetadata>(std::vector<MockMetadata::ColumnDef>{
-    {"id", record::Type::Integer, 10}
+    {"id", record::Type::INTEGER, 10}
   });
 
   MockResultSet::Row row;

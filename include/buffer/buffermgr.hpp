@@ -108,6 +108,13 @@ public:
      */
     void set_max_time(uint64_t max_time_ms);
 
+    /**
+     * Returns the file manager.
+     *
+     * @return shared pointer to file manager
+     */
+    std::shared_ptr<file::FileMgr> file_mgr() const;
+
 private:
     /**
      * Attempts to pin a buffer to the block without waiting.
@@ -145,6 +152,7 @@ private:
 private:
     static constexpr uint64_t MAX_TIME = 10000;  // 10 seconds in ms
 
+    std::shared_ptr<file::FileMgr> fm_;
     std::vector<Buffer> bufferpool_;
     size_t num_available_;
     uint64_t max_time_;
